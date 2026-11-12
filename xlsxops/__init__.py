@@ -16,7 +16,7 @@ from .ops_data import (dedupe, filter_rows, from_csv, lookup, multisheet_report,
                        sort, split_column)
 from .ops_format import chart, conditional_format, data_validation, format_range
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def call(name: str, args: dict | None = None) -> dict:

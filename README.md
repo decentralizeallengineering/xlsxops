@@ -1,5 +1,30 @@
 # xlsxops
 
+xlsxops gives LLM agents Excel (.xlsx) operations as JSON-schema tools that check every formula they write.
+
+## Install
+
+    pip install git+https://github.com/decentralizeallengineering/xlsxops
+
+## Example
+
+```console
+$ printf 'item,qty,price\nbolts,40,0.25\nnuts,60,0.10\nwashers,25,0.05\n' > orders.csv
+```
+
+```python
+>>> import xlsxops
+>>> xlsxops.call("from_csv", {"path": "orders.xlsx", "csv_path": "orders.csv"})["details"]["column_types"]
+{'item': 'text', 'qty': 'number', 'price': 'number'}
+>>> r = xlsxops.call("total_row", {"path": "orders.xlsx", "columns": ["qty"], "func": "SUM"})
+>>> r["ok"], r["details"]["formulas"], r["details"]["values"]
+(True, {'qty': '=SUM(B2:B4)'}, {'qty': 125})
+```
+
+The formula is written to the sheet and checked: `values` is what Excel will show.
+
+## How it works
+
 Reliable Excel (`.xlsx`) operations for an LLM tool layer.
 
 Each operation is a plain Python function that an agent calls as a tool. It takes JSON-style
@@ -31,24 +56,6 @@ X.total_row("sales.xlsx", sheet="Sales", columns=["Qty", "Total"])
 X.chart("sales.xlsx", sheet="Sales", type="bar", x="Rep", y=["Total"], title="Revenue by rep")
 X.verify_formulas("sales.xlsx")
 ```
-
-## Try it
-
-```console
-$ pip install git+https://github.com/decentralizeallengineering/xlsxops
-$ printf 'item,qty,price\nbolts,40,0.25\nnuts,60,0.10\nwashers,25,0.05\n' > orders.csv
-```
-
-```python
->>> import xlsxops
->>> xlsxops.call("from_csv", {"path": "orders.xlsx", "csv_path": "orders.csv"})["details"]["column_types"]
-{'item': 'text', 'qty': 'number', 'price': 'number'}
->>> r = xlsxops.call("total_row", {"path": "orders.xlsx", "columns": ["qty"], "func": "SUM"})
->>> r["ok"], r["details"]["formulas"], r["details"]["values"]
-(True, {'qty': '=SUM(B2:B4)'}, {'qty': 125})
-```
-
-The formula is written to the sheet and checked: `values` is what Excel will show.
 
 ## Operations
 
