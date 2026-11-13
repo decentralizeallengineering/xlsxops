@@ -154,3 +154,10 @@ operation proving styles/charts/sheets/names survive, cached values present afte
 kept without Pillow, the lossy-content guard, evaluator cases for every supported function, and
 `verify_formulas` on a workbook with broken references, type errors, a circular chain and
 unsupported functions.
+
+## Related
+
+- [docxops](https://github.com/decentralizeallengineering/docxops): the same report and schema style for Word files
+- [pdfops](https://github.com/decentralizeallengineering/pdfops): the same for PDF
+- [officecheck](https://github.com/decentralizeallengineering/officecheck): grade the files an agent wrote against a JSON spec
+- [all tools](https://github.com/decentralizeallengineering): the index of this account
